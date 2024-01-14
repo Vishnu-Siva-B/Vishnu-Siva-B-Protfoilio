@@ -72,6 +72,8 @@ $(document).ready(function() {
     });
 });
 
+
+
 function send_message() {
     // Get form input values
     let name = document.getElementById("name").value;
