@@ -184,7 +184,7 @@
                 <div class="card">
                     <div class="box">
                         <img src="images/profile-4.jpeg" alt="">
-                        <div class="text">Paari Kishore M</div>
+                        <div class="text">Pari Kishore M</div>
                         <p>Front-End Pro with Game Development Expertise.</p>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                     <div class="text">Get in Touch</div>
                     <p>Have a question, suggestion, or just want to say hello? Feel free to reach out using the form. I'd love to hear from you!<br>
                         <br>
-                        <b>Note:</b> Please ensure that you receive a successful message sent alert after sending message, or please try again.</p><br>
+                        <b>Note:</b> Please ensure that you receive a successful message sent alert after sending a message, or please try again.</p><br>
                     <div class="icons">
                         <div class="row">
                             <i class="fas fa-user"></i>
@@ -238,29 +238,30 @@
                 </div>
                 <div class="column right">
                     <div class="text">Message me</div>
-                    <form>
+                    <form id="contactForm">
                         <div class="fields">
                             <div class="field name">
-                                <input type="text" id="name" placeholder="Name">
+                                <input type="text" id="name" placeholder="Name" autocomplete="off">
                             </div>
                             <div class="field email">
-                                <input type="text" id="email" placeholder="Your Email">
+                                <input type="text" id="email" placeholder="Your Email" autocomplete="off">
                             </div>
                         </div>
                         <div class="field">
-                            <input type="text" id="subject" placeholder="Subject">
+                            <input type="text" id="subject" placeholder="Subject" autocomplete="off">
                         </div>
                         <div class="field textarea">
-                            <textarea cols="30" rows="10" id="message" placeholder="Message.."></textarea>
+                            <textarea cols="30" rows="10" id="message" placeholder="Message.." autocomplete="off"></textarea>
                         </div>
                         <div class="button-area">
-                            <button onclick="send_message()" type="submit">Send message</button>
+                            <button onclick="send_message()" type="button">Send message</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+    
 
     <!-- footer section start -->
     <footer>

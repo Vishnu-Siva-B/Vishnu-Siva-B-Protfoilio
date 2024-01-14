@@ -72,8 +72,6 @@ $(document).ready(function() {
     });
 });
 
-
-
 function send_message() {
     // Get form input values
     let name = document.getElementById("name").value;
@@ -81,7 +79,7 @@ function send_message() {
     let subject = document.getElementById("subject").value;
     let message = document.getElementById("message").value;
 
-    var targetElement = document.getElementById("contact");
+    var targetElement = document.getElementById("home");
 
     // Validate form inputs
     if (name.trim() === '') {
@@ -90,16 +88,19 @@ function send_message() {
             text: 'Please fill in all fields',
             icon: 'error'
         }).then(() => {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
-
-            // Autofocus the first empty field
-            if (name.trim() === '') {
                 document.getElementById("name").focus();
-            }
+        });
+        return;
+    }
+
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!name.match(nameRegex)) {
+        swal({
+            title: 'Validation Error!',
+            text: 'Name must not contain special characters or numbers',
+            icon: 'error'
+        }).then(() => {
+            document.getElementById("name").focus();
         });
         return;
     }
@@ -110,34 +111,7 @@ function send_message() {
             text: 'Name field must have more than two characters',
             icon: 'error'
         }).then(() => {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
-
             document.getElementById("name").focus();
-
-        });
-        return;
-    }
-
-    if (email.trim() === '') {
-        swal({
-            title: 'Validation Error!',
-            text: 'Please fill in all fields',
-            icon: 'error'
-        }).then(() => {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
-
-            // Autofocus the first empty field
-            if (email.trim() === '') {
-                document.getElementById("email").focus();
-            }
         });
         return;
     }
@@ -150,15 +124,9 @@ function send_message() {
             text: 'Please enter a valid email address',
             icon: 'error'
         }).then(() => {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
-            // Autofocus the email field
             document.getElementById("email").focus();
         });
-        return;
+        return false;
     }
 
     if (subject.trim() === '' || message.trim() === '') {
@@ -167,18 +135,13 @@ function send_message() {
             text: 'Please fill in all fields',
             icon: 'error'
         }).then(() => {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest'
-            });
             if (subject.trim() === '') {
                 document.getElementById("subject").focus();
             } else if (message.trim() === '') {
                 document.getElementById("message").focus();
             }
         });
-        return;
+        return false;
     }
 
     let templateParams = {
@@ -198,6 +161,11 @@ function send_message() {
                 title: 'Email sent successfully!',
                 text: 'Thanks for reaching out',
                 icon: 'success'
+            });
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
             });
             // Reset form fields
             document.getElementById("name").value = '';
@@ -219,3 +187,8 @@ function send_message() {
             });
         });
 }
+
+document.getElementById('contactForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    send_message(); // Call your function to handle form submission
+});
