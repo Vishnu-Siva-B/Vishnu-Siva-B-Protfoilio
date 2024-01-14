@@ -73,10 +73,111 @@ $(document).ready(function() {
 });
 
 function send_message() {
+    // Get form input values
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let subject = document.getElementById("subject").value;
     let message = document.getElementById("message").value;
+
+    var targetElement = document.getElementById("contact");
+
+    // Validate form inputs
+    if (name.trim() === '') {
+        swal({
+            title: 'Validation Error!',
+            text: 'Please fill in all fields',
+            icon: 'error'
+        }).then(() => {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+
+            // Autofocus the first empty field
+            if (name.trim() === '') {
+                document.getElementById("name").focus();
+            }
+        });
+        return;
+    }
+
+    if (name.trim().length <= 2) {
+        swal({
+            title: 'Validation Error!',
+            text: 'Name field must have more than two characters',
+            icon: 'error'
+        }).then(() => {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+
+            document.getElementById("name").focus();
+
+        });
+        return;
+    }
+
+    if (email.trim() === '') {
+        swal({
+            title: 'Validation Error!',
+            text: 'Please fill in all fields',
+            icon: 'error'
+        }).then(() => {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+
+            // Autofocus the first empty field
+            if (email.trim() === '') {
+                document.getElementById("email").focus();
+            }
+        });
+        return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.match(emailRegex)) {
+        swal({
+            title: 'Validation Error!',
+            text: 'Please enter a valid email address',
+            icon: 'error'
+        }).then(() => {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+            // Autofocus the email field
+            document.getElementById("email").focus();
+        });
+        return;
+    }
+
+    if (subject.trim() === '' || message.trim() === '') {
+        swal({
+            title: 'Validation Error!',
+            text: 'Please fill in all fields',
+            icon: 'error'
+        }).then(() => {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+            if (subject.trim() === '') {
+                document.getElementById("subject").focus();
+            } else if (message.trim() === '') {
+                document.getElementById("message").focus();
+            }
+        });
+        return;
+    }
 
     let templateParams = {
         from_name: name,
@@ -96,13 +197,13 @@ function send_message() {
                 text: 'Thanks for reaching out',
                 icon: 'success'
             });
+            // Reset form fields
             document.getElementById("name").value = '';
             document.getElementById("email").value = '';
             document.getElementById("subject").value = '';
             document.getElementById("message").value = '';
         })
         .catch((error) => {
-            var targetElement = document.getElementById("contact");
             swal({
                 title: 'Email could not be sent!',
                 text: 'Please try again one more time',
